@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Tomcat 10.0.11" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.0.11" ALTERNATIVE_JRE_ENABLED="false">
-    <option name="UPDATING_POLICY" value="hot-swap-classes" />
+    <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
-      <artifact name="Gradle : com.pdfreader : PDFReader-1.0-SNAPSHOT.war">
+      <artifact name="Gradle : com.pdfreader : pdfreader-app.war">
         <settings>
           <option name="CONTEXT_PATH" value="/pdfreader-app" />
         </settings>
@@ -81,7 +81,9 @@
     </ConfigurationWrapper>
     <method v="2">
       <option name="Make" enabled="true" />
-      <option name="BuildArtifacts" enabled="true" />
+      <option name="BuildArtifacts" enabled="true">
+        <artifact name="Gradle : com.pdfreader : pdfreader-app.war" />
+      </option>
     </method>
   </configuration>
 </component>

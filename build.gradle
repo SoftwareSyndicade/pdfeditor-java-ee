@@ -4,7 +4,6 @@ plugins {
 }
 
 group 'com.pdfreader'
-version '0.0.1'
 
 repositories {
     mavenCentral()
@@ -23,6 +22,8 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '5.0.0'
+    implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.24'
+
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
