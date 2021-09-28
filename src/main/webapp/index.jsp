@@ -3,11 +3,18 @@
 <html>
 <head>
     <title>PDF Reader</title>
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/styles.css" rel="stylesheet">
+    <link href="styles/index.css" rel="stylesheet">
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+    <div class="container-fluid max-supported-width h-100 p-3">
+        <div class="stage">
+
+        </div>
+    </div>
+
+    <script src="scripts/jquery-3.6.0.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
 </body>
 </html>
