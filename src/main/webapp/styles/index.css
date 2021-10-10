@@ -6,3 +6,11 @@
     overflow: hidden;
     overflow-y: auto;
 }
+
+.upload-area{
+    border:1px dashed;
+    border-radius: 0.5rem;
+    width: 700px;
+    margin: auto;
+    position: relative;
+}
