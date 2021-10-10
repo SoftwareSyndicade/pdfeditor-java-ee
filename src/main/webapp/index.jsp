@@ -13,19 +13,6 @@
 <body>
     <div class="container-fluid max-supported-width h-100 p-3">
         <div class="stage">
-<%--            <div class="text-center padding2030">--%>
-<%--                <h2>Choose file to upload</h2>--%>
-<%--                <div style="border:1px dashed;border-radius: 0.5rem;max-width: 50%;margin: auto" class="padding2030 upload-area">--%>
-<%--                    <img src="assets/pdf-icon.svg" style="width: 70px">--%>
-<%--                    <div class="mt-3">--%>
-<%--                        <h5 class="form-label">Drag and drop a pdf file</h5>--%>
-<%--                        <h6>OR</h6>--%>
-<%--                        <input class="form-control" type="file" id="formFile" accept="application/pdf">--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-
-<%--            </div>--%>
-
 <%--            <div id='viewer' style='width: 100%;height: 100%'></div>--%>
         </div>
     </div>
@@ -50,23 +37,40 @@
             $('.upload-area').on('dragenter', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                $('.stage').empty()
             });
 
             // Drag over
             $('.upload-area').on('dragover', function (e) {
-                debugger
                 e.stopPropagation();
                 e.preventDefault();
-                // $("h1").text("Drop");
-                $('.stage').empty()
+
+
             });
 
-            $('.upload-area').on('dragover', function (e) {
+            function uploadData(formdata){
+
+                $.ajax({
+                    url: 'pdf-upload',
+                    type: 'post',
+                    data: formdata,
+                    dataType: 'json',
+                    success: function(response){
+                        alert(response)
+                    }
+                });
+            }
+
+            // Drop
+            $('.upload-area').on('drop', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                // $("h1").text("Drop");
-                $('.stage').empty()
+                
+                let file = e.originalEvent.dataTransfer.files;
+                let fd = new FormData();
+
+                fd.append('file', file[0]);
+
+                uploadData(fd);
             });
         })
         // async function createPdf() {
