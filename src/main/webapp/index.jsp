@@ -68,15 +68,31 @@
         function showUploadArea(){
             let stage = $('.stage')
             stage.empty()
-            stage.append($('template#upload-area').html())
+            let uploadArea = $($('template#upload-area').html())
+
 
             $.ajax({
                 url: 'pdf-uploader',
                 method: 'GET',
                 success: function(res){
-                    alert(res)
+
+
+                    let recentUploads = JSON.parse(res)
+                    if(recentUploads !== undefined && recentUploads.length > 0){
+                        let recentPDFStage = uploadArea.find('.recent-pdf-stage')
+                        recentPDFStage.empty()
+                        $.each(recentUploads, function (index, upload){
+                            let recentPDFTemplate = $($('template#recent-pdf').html()).clone()
+
+                            recentPDFTemplate.find('#pdf-name').text(upload.file_NAME)
+                            recentPDFTemplate.find('#pdf-uploaded-on').text(new Date(upload.uploaded_ON).toISOString().split('T')[0])
+                            recentPDFStage.append(recentPDFTemplate)
+                        })
+                    }
                 }
             })
+
+            stage.append(uploadArea)
         }
 
         function uploadData(data){
@@ -162,8 +178,11 @@
                 <div class="col-3">
                     <img src="assets/pdf-icon.svg">
                 </div>
-                <div class="col-9 p-0 text-start ps-2" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;position: relative">
-                    <h4 id="pdf-name" style="position: absolute;top: 50%;transform: translateY(-50%)">PDF Name</h4>
+                <div class="col-8 p-0 text-start ps-2" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;position: relative">
+                    <div style="position: absolute;top: 50%;transform: translateY(-50%)">
+                        <h5 id="pdf-name" class="m-0">PDF Name</h5>
+                        <span id="pdf-uploaded-on" class="small">Uploaded on</span>
+                    </div>
                 </div>
             </div>
         </div>

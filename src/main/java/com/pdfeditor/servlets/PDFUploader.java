@@ -30,7 +30,7 @@ public class PDFUploader extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
 
-        List<RecentUpload> recentUploads = new ArrayList<>();
+        List<RecentUpload> recentUploads;
         SQLServerManager manager = new SQLServerManager();
         try {
             recentUploads = manager.fetchUploads();
@@ -39,7 +39,6 @@ public class PDFUploader extends HttpServlet {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-            System.out.println(recentUploads.size());
             pw.println(mapper.writeValueAsString(recentUploads));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
