@@ -11,7 +11,6 @@
     <div class="container-fluid h-100 p-3">
         <div class="row h-100 m-0">
             <div class="max-supported-width stage p-0">
-
             </div>
         </div>
     </div>
@@ -133,10 +132,33 @@
                     <input type="file" class="form-control" accept="application/pdf">
                 </div>
             </div>
+            <div style="width: 800px;margin: auto" class="text-center padding2030">
+                <h3>Recent uploads</h3>
+                <div class="container-fluid mt-3">
+                    <div class="row m-0 recent-pdf-stage">
+                        <div style="width: 300px;margin: auto">
+                            <img src="assets/empty-illustration.svg">
+                            <h5>No recent uploads</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </template>
     <template id="pdf-viewer">
         <div id='viewer' style='width: 100%;height: 100%'></div>
+    </template>
+    <template id="recent-pdf">
+        <div class="col-4 p-2 recent-pdf">
+            <div class="row m-0">
+                <div class="col-3">
+                    <img src="assets/pdf-icon.svg">
+                </div>
+                <div class="col-9 p-0 text-start ps-2" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;position: relative">
+                    <h4 id="pdf-name" style="position: absolute;top: 50%;transform: translateY(-50%)">PDF Name</h4>
+                </div>
+            </div>
+        </div>
     </template>
 </body>
 </html>
