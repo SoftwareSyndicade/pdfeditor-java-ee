@@ -3,6 +3,7 @@ package com.pdfeditor.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.pdfeditor.responsemodels.PDFUploadResponse;
+import com.pdfeditor.sqlserver.SQLServerManager;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -33,6 +34,8 @@ public class PDFUploader extends HttpServlet {
                     part.write(getServletContext().getRealPath("/") + fileName);
                 }
 
+                SQLServerManager manager = new SQLServerManager();
+                manager.saveUpload(fileName);
 
                 PDFUploadResponse uploadResponse = new PDFUploadResponse(){{
                    setPDF_URL(URI.create(getBaseUrl(request)) + "/" + fileName);
