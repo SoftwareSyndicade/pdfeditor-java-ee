@@ -1,5 +1,6 @@
 package com.pdfeditor.sqlserver;
 
+import com.pdfeditor.datamodels.RecentUpload;
 import com.pdfeditor.properties.MSSqlServerProps;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,5 +29,26 @@ public class SQLServerManager {
 
         return isSaved;
     }
+
+    public List<RecentUpload> fetchUploads() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException{
+        List<RecentUpload> recentUploads = new ArrayList<>();
+        int index = 0;
+        Class.forName(MSSqlServerProps.DB_DRIVER).getDeclaredConstructor().newInstance();
+        try(Connection conn = DriverManager.getConnection(MSSqlServerProps.CONNECTION_STRING)){
+            try(PreparedStatement ps = conn.prepareStatement(SQLQueries.FETCH_RECENT_PDF); ResultSet rs = ps.executeQuery()){
+                while (rs.next()){
+                    recentUploads.add(new RecentUpload(){{
+                        setID(rs.getInt("ID"));
+                        setFILE_NAME(rs.getString("FILE_NAME"));
+                        setUPLOADED_ON(rs.getTimestamp("UPLOADED_ON").toInstant().atZone(TimeZone.getDefault().toZoneId()));
+                    }});
+                }
+            }
+        }
+
+        return  recentUploads;
+    }
+
+
 
 }

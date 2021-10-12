@@ -1,7 +1,10 @@
 package com.pdfeditor.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.pdfeditor.datamodels.RecentUpload;
 import com.pdfeditor.responsemodels.PDFUploadResponse;
 import com.pdfeditor.sqlserver.SQLServerManager;
 import jakarta.servlet.*;
@@ -10,7 +13,11 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "PDFUploader", value = "/pdf-uploader")
 @MultipartConfig(
@@ -21,7 +28,32 @@ import java.net.URI;
 public class PDFUploader extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
 
+        List<RecentUpload> recentUploads = new ArrayList<>();
+        SQLServerManager manager = new SQLServerManager();
+        try {
+            recentUploads = manager.fetchUploads();
+
+            PrintWriter pw = response.getWriter();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+            mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+            System.out.println(recentUploads.size());
+            pw.println(mapper.writeValueAsString(recentUploads));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

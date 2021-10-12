@@ -69,6 +69,14 @@
             let stage = $('.stage')
             stage.empty()
             stage.append($('template#upload-area').html())
+
+            $.ajax({
+                url: 'pdf-uploader',
+                method: 'GET',
+                success: function(res){
+                    alert(res)
+                }
+            })
         }
 
         function uploadData(data){
