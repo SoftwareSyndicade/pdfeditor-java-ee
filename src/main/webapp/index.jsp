@@ -86,6 +86,10 @@
 
                             recentPDFTemplate.find('#pdf-name').text(upload.file_NAME)
                             recentPDFTemplate.find('#pdf-uploaded-on').text(new Date(upload.uploaded_ON).toISOString().split('T')[0])
+                            recentPDFTemplate.click(function (){
+                                docURL = upload.doc_URL
+                                viewPDF()
+                            })
                             recentPDFStage.append(recentPDFTemplate)
                         })
                     }

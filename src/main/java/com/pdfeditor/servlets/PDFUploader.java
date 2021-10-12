@@ -34,6 +34,9 @@ public class PDFUploader extends HttpServlet {
         SQLServerManager manager = new SQLServerManager();
         try {
             recentUploads = manager.fetchUploads();
+            recentUploads.forEach(upload ->{
+                upload.setDOC_URL(URI.create(getBaseUrl(request)) + "/" + upload.getFILE_NAME());
+            });
 
             PrintWriter pw = response.getWriter();
             ObjectMapper mapper = new ObjectMapper();
