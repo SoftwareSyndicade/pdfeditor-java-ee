@@ -49,6 +49,17 @@ public class SQLServerManager {
         return  recentUploads;
     }
 
+    public boolean clearDB() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, SQLException{
+        boolean isClear = false;
+        Class.forName(MSSqlServerProps.DB_DRIVER).getDeclaredConstructor().newInstance();
+        try(Connection conn = DriverManager.getConnection(MSSqlServerProps.CONNECTION_STRING)){
+            try(PreparedStatement ps = conn.prepareStatement(SQLQueries.CLEAR_RECENT_PDF);){
+                isClear = ps.executeUpdate() > 0;
+            }
+        }
+        return isClear;
+    }
+
 
 
 }
